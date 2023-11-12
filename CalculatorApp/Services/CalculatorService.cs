@@ -1,46 +1,45 @@
+using CalculatorApp.Infrastructure.Repository.Interfaces;
 using CalculatorApp.Services.Interfaces;
 
 namespace CalculatorApp.Services
 {
-    public class CalculatorService : ICalculatorService
+    public class CalculatorService : HelperMethods, ICalculatorService
     {
-       public double Calculate(double num1, double num2, string operation)
+        private readonly ICalculatorRepository _calculatorRepository;
+        public CalculatorService(ICalculatorRepository calculatorRepository)
         {
+            _calculatorRepository = calculatorRepository;
+        }
+        public double PerformCalculation(double num1, double num2, string operation)
+        {
+            double result;
             switch(operation)
             {
                 case "+":
-                    return Add(num1, num2);
+                    result = Add(num1, num2);
+                    break;
                 case "-":
-                    return Subtract(num1, num2);
+                    result = Subtract(num1, num2);
+                    break;
                 case "*":
-                    return Multiply(num1, num2);
+                    result = Multiply(num1, num2);
+                    break;
                 case "/":
-                    return Divide(num1, num2);
+                    result = Divide(num1, num2);
+                    break;
                 default:
                     throw new InvalidOperationException("Invalid operator, please try with the available operators");
 
             }
+            return result;
 
         }
 
-        public double Add(double num1, double num2)
+        public double Calculate(double num1, double num2, string operation)
         {
-            return num1 + num2;
-        }
-
-        public double Subtract(double num1, double num2)
-        {
-            return num1 - num2;
-        }
-
-        public double Multiply(double num1, double num2)
-        {
-            return num1 * num2;
-        }
-
-        public double Divide(double num1, double num2)
-        {
-            return num1 / num2;
+            double result = PerformCalculation(num1, num2, operation);
+            _calculatorRepository.AddHistory($"{num1} {operation} {num2}", result);
+            return result;
         }
 
     }
