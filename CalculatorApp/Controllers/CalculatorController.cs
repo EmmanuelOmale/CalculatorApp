@@ -21,10 +21,6 @@ namespace CalculatorApp.Controllers
             return Ok(result);
         }
 
-        /*[HttpGet]
-        public ActionResult GetCalculationHistory()
-        {
-
-        }*/
+       
     }
 }
