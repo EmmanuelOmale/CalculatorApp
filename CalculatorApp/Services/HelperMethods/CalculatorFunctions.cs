@@ -1,4 +1,4 @@
-﻿namespace CalculatorApp.Services
+﻿namespace CalculatorApp.Services.HelperMethods
 {
     public class CalculatorFunctions
     {
@@ -22,4 +22,5 @@
             return num1 / num2;
         }
     }
+
 }
