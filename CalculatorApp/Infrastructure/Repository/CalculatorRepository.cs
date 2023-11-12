@@ -25,10 +25,10 @@ namespace CalculatorApp.Infrastructure.Repository
             _calculatorContext.SaveChanges();
         }
 
-        public IEnumerable<CalculatorRepository> GetHistory()
+        public IEnumerable<CalculatorHistory> GetHistory()
         {
             var list = _calculatorContext.CalculationHistories.ToList();
-            return (IEnumerable<CalculatorRepository>)list;
+            return list;
         }
     }
 }

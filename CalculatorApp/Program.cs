@@ -1,4 +1,5 @@
 using CalculatorApp.Infrastructure.Data;
+using CalculatorApp.Infrastructure.Repository.Interfaces;
 using CalculatorApp.Services;
 using CalculatorApp.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<ICalculatorService, CalculatorService>();
+builder.Services.AddScoped<ICalculatorRepository, ICalculatorRepository>();
 builder.Services.AddDbContext<CalculatorContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

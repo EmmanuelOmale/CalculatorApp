@@ -20,5 +20,11 @@ namespace CalculatorApp.Controllers
            double result = _calculatorService.Calculate(num1, num2, operation);
             return Ok(result);
         }
+
+        /*[HttpGet]
+        public ActionResult GetCalculationHistory()
+        {
+
+        }*/
     }
 }

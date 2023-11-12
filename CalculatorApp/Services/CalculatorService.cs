@@ -3,7 +3,7 @@ using CalculatorApp.Services.Interfaces;
 
 namespace CalculatorApp.Services
 {
-    public class CalculatorService : HelperMethods, ICalculatorService
+    public class CalculatorService : CalculatorFunctions, ICalculatorService
     {
         private readonly ICalculatorRepository _calculatorRepository;
         public CalculatorService(ICalculatorRepository calculatorRepository)

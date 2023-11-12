@@ -1,6 +1,6 @@
 ﻿namespace CalculatorApp.Services
 {
-    public class HelperMethods
+    public class CalculatorFunctions
     {
         public double Add(double num1, double num2)
         {
