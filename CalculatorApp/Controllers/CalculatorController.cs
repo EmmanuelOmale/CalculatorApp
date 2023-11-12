@@ -14,8 +14,8 @@ namespace CalculatorApp.Controllers
             _calculatorService = calculatorService;
         }
 
-        [HttpGet]
-        public IActionResult Calculate([FromQuery] string expression)
+        [HttpPost]
+        public IActionResult Calculate([FromBody] string expression)
         {
             try
             {
