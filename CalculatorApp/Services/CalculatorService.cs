@@ -1,3 +1,4 @@
+using CalculatorApp.Entities;
 using CalculatorApp.Infrastructure.Repository.Interfaces;
 using CalculatorApp.Services.HelperMethods;
 using CalculatorApp.Services.Interfaces;
@@ -27,6 +28,12 @@ namespace CalculatorApp.Services
             double result = PerformCalculation(numbers, operations);
 
             _calculatorRepository.AddHistory(expression, result);
+            return result;
+        }
+
+        public IEnumerable<CalculatorHistory> CalculationHistory()
+        {
+            var result = _calculatorRepository.GetHistory().ToList();
             return result;
         }
     }

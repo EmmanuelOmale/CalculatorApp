@@ -30,6 +30,12 @@ namespace CalculatorApp.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult GetCalculatoionHistory()
+        {
+            var result = _calculatorService.CalculationHistory();
+            return Ok(result);
+        }
 
 
        
