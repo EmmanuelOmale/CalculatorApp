@@ -15,10 +15,17 @@ namespace CalculatorApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Calculate(double num1, double num2, string operation)
+        public IActionResult Calculate([FromQuery] string expression)
         {
-           double result = _calculatorService.Calculate(num1, num2, operation);
-            return Ok(result);
+            try
+            {
+                double result = _calculatorService.Calculate(expression);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
        

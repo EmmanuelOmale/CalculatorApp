@@ -1,46 +1,72 @@
 using CalculatorApp.Infrastructure.Repository.Interfaces;
 using CalculatorApp.Services.Interfaces;
+using System;
+using System.Linq;
 
 namespace CalculatorApp.Services
 {
     public class CalculatorService : CalculatorFunctions, ICalculatorService
     {
         private readonly ICalculatorRepository _calculatorRepository;
+
         public CalculatorService(ICalculatorRepository calculatorRepository)
         {
             _calculatorRepository = calculatorRepository;
         }
-        public double PerformCalculation(double num1, double num2, string operation)
+
+        public double PerformCalculation(double[] numbers, string[] operations)
         {
-            double result;
-            switch(operation)
+            if (numbers.Length == 0)
             {
-                case "+":
-                    result = Add(num1, num2);
-                    break;
-                case "-":
-                    result = Subtract(num1, num2);
-                    break;
-                case "*":
-                    result = Multiply(num1, num2);
-                    break;
-                case "/":
-                    result = Divide(num1, num2);
-                    break;
-                default:
-                    throw new InvalidOperationException("Invalid operator, please try with the available operators");
-
+                throw new InvalidOperationException("At least one number is required for calculation.");
             }
-            return result;
 
+            double result = numbers[0];
+
+            for (int i = 0; i < operations.Length; i++)
+            {
+                if (i + 1 < numbers.Length)
+                {
+                    switch (operations[i])
+                    {
+                        case "+":
+                            result = Add(result, numbers[i + 1]);
+                            break;
+                        case "-":
+                            result = Subtract(result, numbers[i + 1]);
+                            break;
+                        case "*":
+                            result = Multiply(result, numbers[i + 1]);
+                            break;
+                        case "/":
+                            result = Divide(result, numbers[i + 1]);
+                            break;
+                        default:
+                            throw new InvalidOperationException($"Invalid operator '{operations[i]}'. Please use valid operators: +, -, *, /");
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("Mismatched number of numbers and operators.");
+                }
+            }
+
+            return result;
         }
 
-        public double Calculate(double num1, double num2, string operation)
+        public double Calculate(string expression)
         {
-            double result = PerformCalculation(num1, num2, operation);
-            _calculatorRepository.AddHistory($"{num1} {operation} {num2}", result);
+            // Split the expression into numbers and operators
+            string[] parts = expression.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            // Separate numbers and operators into arrays
+            double[] numbers = parts.Where((x, i) => i % 2 == 0).Select(double.Parse).ToArray();
+            string[] operations = parts.Where((x, i) => i % 2 != 0).ToArray();
+
+            double result = PerformCalculation(numbers, operations);
+
+            _calculatorRepository.AddHistory(expression, result);
             return result;
         }
-
     }
 }
