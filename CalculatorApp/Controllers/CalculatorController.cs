@@ -1,5 +1,7 @@
+using CalculatorApp.Entities;
 using CalculatorApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 namespace CalculatorApp.Controllers
 {
@@ -15,11 +17,11 @@ namespace CalculatorApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Calculate([FromBody] string expression)
+        public IActionResult Calculate([FromBody] Expressions expression)
         {
             try
             {
-                double result = _calculatorService.Calculate(expression);
+                double result = _calculatorService.Calculate(expression.Request);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -27,6 +29,8 @@ namespace CalculatorApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
 
        
     }
