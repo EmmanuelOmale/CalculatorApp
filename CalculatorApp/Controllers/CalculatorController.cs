@@ -16,7 +16,7 @@ namespace CalculatorApp.Controllers
             _calculatorService = calculatorService;
         }
 
-        [HttpPost]
+        [HttpPost("{expression}")]
         public IActionResult Calculate([FromBody] Expressions expression)
         {
             try
@@ -30,14 +30,12 @@ namespace CalculatorApp.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("{calculationHistory}")]
         public IActionResult GetCalculatoionHistory()
         {
             var result = _calculatorService.CalculationHistory();
             return Ok(result);
         }
-
-
        
     }
 }

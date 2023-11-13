@@ -2,6 +2,6 @@
 {
     public class Expressions
     {
-        public string Request { get; set; }
+        public string Request { get; set; } = string.Empty;
     }
 }
