@@ -2,6 +2,7 @@ using CalculatorApp.Entities;
 using CalculatorApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
+using System.Net;
 
 namespace CalculatorApp.Controllers
 {
@@ -16,7 +17,8 @@ namespace CalculatorApp.Controllers
             _calculatorService = calculatorService;
         }
 
-        [HttpPost("{expression}")]
+        [HttpPost("[action]")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
         public IActionResult Calculate([FromBody] Expressions expression)
         {
             try
@@ -30,12 +32,14 @@ namespace CalculatorApp.Controllers
             }
         }
 
-        [HttpGet("{calculationHistory}")]
-        public IActionResult GetCalculatoionHistory()
+        [HttpGet("[action]")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public IActionResult GetCalculationHistory()
         {
             var result = _calculatorService.CalculationHistory();
             return Ok(result);
         }
-       
+
     }
 }
